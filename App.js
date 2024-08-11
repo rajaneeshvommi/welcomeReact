@@ -1,16 +1,42 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import Header from './components/Header';
+import About from './components/About';
+import Error from './components/Error';
+import Contact from './components/Contact';
+import Home from './components/Home';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
-const SubHeading = () => <h2 id={"SubHeading"}>Learn once Write Everywhere</h2>
-
-const Heading = () =>
-(
+const AppLayout = () =>{
+    return(
     <div>
-        <h1 id={"Heading"}>Welcome React javascript</h1>
-        <SubHeading/>
+        <Header/>
+        <Outlet/>
     </div>
-)
-    
+    )
+} 
+
+const appRoute = createBrowserRouter([
+    {
+    path: '/',
+    element: <AppLayout/>,
+    children:[
+        {
+            path: '/',
+            element: <Home/>
+        },
+        {
+            path: '/about',
+            element: <About/>
+        },
+        {
+            path: '/contact',
+            element: <Contact/>
+        },
+    ],
+    errorElement: <Error/>
+}])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<Heading/>);
+
+root.render(<RouterProvider router={appRoute}/>);
